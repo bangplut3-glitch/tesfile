@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dr. [Nama Anda] | Layanan Kesehatan Spesialis Umum</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        :root {
+            --sage: #87A96B;
+            --sage-dark: #6b8a54;
+            --sage-light: #eef3eb;
+            --terracotta: #E2725B;
+            --terracotta-dark: #c95d48;
+            --cream: #F9F7F2;
+            --navy-accent: #1e2a4a;
+            --text-main: #2d3427;
+            --text-muted: #5a6350;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(249, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled { padding: 15px 8%; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+        .logo { font-size: 1.4rem; font-weight: 700; color: var(--navy-accent); }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 0.85rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--sage); }
+
+        .btn-nav { background: var(--terracotta); color: white !important; padding: 8px 20px; border-radius: 50px; }
+
+        section { padding: 100px 8%; min-height: auto; }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; gap: 50px; }
+        .hero-content { flex: 1.2; }
+        .hero-tag { background: var(--sage-light); color: var(--sage-dark); padding: 6px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 20px; display: inline-block; }
+        .hero-content h1 { font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.1; margin-bottom: 24px; }
+        .hero-btns { display: flex; gap: 15px; margin-top: 30px; }
+
+        .hero-image { flex: 1; text-align: right; position: relative; }
+        .hero-image img { 
+            width: 100%; 
+            max-width: 450px;
+            min-height: 300px;
+            background: #ddd; /* Warna cadangan jika foto tidak muncul */
+            border-radius: 60px 20px 60px 20px; 
+            box-shadow: 30px 30px 0 var(--sage-light);
+            transition: transform 0.5s ease;
+            object-fit: cover;
+        }
+        .hero-image:hover img { transform: scale(1.02); }
+
+        /* About Section */
+        .about { background: var(--white); display: flex; align-items: center; gap: 60px; }
+        .about-img { flex: 1; position: relative; }
+        .about-img img { 
+            width: 100%; 
+            min-height: 400px;
+            background: #ddd;
+            display: block; 
+            border-radius: 30px; 
+            box-shadow: -20px 20px 0 var(--cream);
+            object-fit: cover;
+        }
+        .about-text { flex: 1.5; }
+
+        /* Grid Layouts */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .card { background: var(--cream); padding: 40px; border-radius: 30px; transition: 0.4s; border: 1px solid transparent; }
+        .card:hover { transform: translateY(-10px); background: white; border-color: var(--sage-light); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .card-icon { color: var(--terracotta); margin-bottom: 20px; }
+
+        /* Schedule Table */
+        .schedule-box { background: var(--white); border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 15px; color: var(--sage); border-bottom: 2px solid var(--cream); }
+        td { padding: 15px; border-bottom: 1px solid var(--cream); }
+
+        /* Blog Section */
+        .blog-card { background: var(--white); border-radius: 20px; overflow: hidden; transition: 0.3s; }
+        .blog-img { height: 200px; background: var(--sage-light); display: flex; align-items: center; justify-content: center; color: var(--sage); }
+        .blog-content { padding: 25px; }
+
+        /* Contact */
+        .contact-container { display: flex; gap: 50px; background: var(--white); padding: 50px; border-radius: 30px; }
+        form { flex: 2; display: flex; flex-direction: column; gap: 15px; }
+        input, textarea { padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; }
+        .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+        .btn-primary { background: var(--sage); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; }
+
+        @media (max-width: 992px) {
+            .hero, .about, .contact-container { flex-direction: column; text-align: center; }
+            .nav-links { display: none; }
+            .about-img, .hero-image { width: 100%; margin-bottom: 30px; }
+            .hero-image { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">dr. [Nama Anda]</div>
+        <div class="nav-links">
+            <a href="#home">Beranda</a>
+            <a href="#tentang">Tentang</a>
+            <a href="#layanan">Layanan</a>
+            <a href="#jadwal">Jadwal</a>
+            <a href="#edukasi">Edukasi</a>
+            <a href="#kontak" class="btn-nav">Janji Temu</a>
+        </div>
+    </nav>
+
+    <!-- 1. Beranda -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-right">
+            <span class="hero-tag">Mitra Kesehatan Terpercaya</span>
+            <h1>Rawat Kesehatan Anda Dengan Hati.</h1>
+            <p>Memberikan solusi medis menyeluruh dengan standar profesionalisme tinggi dan pendekatan yang hangat.</p>
+            <div class="hero-btns">
+                <a href="#kontak" class="btn-primary"><i data-lucide="calendar"></i> Buat Janji</a>
+                <a href="#layanan" style="color: var(--sage); font-weight: 600; text-decoration: none; padding-top:15px">Lihat Layanan &rarr;</a>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="zoom-in">
+            <!-- Menghubungkan ke file lokal bernama profil.jpg -->
+            <img src="profil.jpg" alt="Foto Profil Tidak Ditemukan" onerror="this.src='https://via.placeholder.com/450x600?text=File+profil.jpg+tidak+ada'">
+        </div>
+    </section>
+
+    <!-- 2. Tentang Saya -->
+    <section class="about" id="tentang">
+        <div class="about-img" data-aos="fade-right">
+            <!-- Menghubungkan ke file lokal bernama profil.jpg -->
+            <img src="profil.jpg" alt="Foto Profil Tidak Ditemukan" onerror="this.src='https://via.placeholder.com/450x600?text=File+profil.jpg+tidak+ada'">
+        </div>
+        <div class="about-text" data-aos="fade-left">
+            <h2 style="font-size: 2.5rem; color: var(--sage); margin-bottom: 20px;">Dedikasi Untuk Kesembuhan</h2>
+            <p style="margin-bottom: 20px;">Halo, saya <strong>dr. [Nama Anda]</strong>. Sebagai seorang dokter umum, fokus utama saya adalah memastikan setiap pasien mendapatkan penanganan yang tepat waktu dan akurat.</p>
+            <p style="margin-bottom: 20px;">Lulusan [Nama Universitas], saya telah mendalami berbagai kasus medis selama lebih dari [X] tahun. Saya percaya bahwa komunikasi yang baik adalah separuh dari kesembuhan.</p>
+            <div style="display: flex; gap: 20px; margin-top: 30px;">
+                <div><strong style="color: var(--terracotta); font-size: 1.5rem;">10+</strong><br><small>Tahun Pengalaman</small></div>
+                <div><strong style="color: var(--terracotta); font-size: 1.5rem;">15k</strong><br><small>Pasien Sembuh</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian lainnya tetap sama -->
+    <section class="services" id="layanan">
+        <div style="text-align: center;" data-aos="fade-up">
+            <h2 style="font-size: 2.5rem; color: var(--sage);">Layanan Medis</h2>
+            <p>Berbagai solusi kesehatan untuk kebutuhan Anda.</p>
+        </div>
+        <div class="grid">
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-icon"><i data-lucide="stethoscope"></i></div>
+                <h3>Konsultasi Umum</h3>
+                <p>Diagnosa penyakit harian dan manajemen kesehatan jangka panjang.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-icon"><i data-lucide="activity"></i></div>
+                <h3>Checkup Rutin</h3>
+                <p>Pemeriksaan fisik lengkap untuk memantau kondisi kesehatan Anda secara berkala.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-icon"><i data-lucide="syringe"></i></div>
+                <h3>Vaksinasi</h3>
+                <p>Layanan imunisasi untuk dewasa dan anak guna pencegahan penyakit menular.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="jadwal" style="background: var(--sage-light);">
+        <div style="text-align: center; margin-bottom: 50px;" data-aos="fade-up">
+            <h2 style="font-size: 2.5rem; color: var(--sage-dark);">Jadwal & Lokasi</h2>
+            <p>Temukan waktu yang tepat untuk berkonsultasi.</p>
+        </div>
+        <div class="schedule-box" data-aos="zoom-in">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hari</th>
+                        <th>Waktu</th>
+                        <th>Lokasi Praktik</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Senin - Rabu</td>
+                        <td>08:00 - 14:00</td>
+                        <td>RS Medika Sejahtera</td>
+                    </tr>
+                    <tr>
+                        <td>Kamis - Jumat</td>
+                        <td>16:00 - 20:00</td>
+                        <td>Klinik Pratama Sehat</td>
+                    </tr>
+                    <tr>
+                        <td>Sabtu</td>
+                        <td>09:00 - 12:00</td>
+                        <td>Sesuai Perjanjian</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="edukasi">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+            <div data-aos="fade-right">
+                <h2 style="font-size: 2.5rem; color: var(--sage);">Blog Edukasi</h2>
+                <p>Wawasan kesehatan harian untuk hidup lebih baik.</p>
+            </div>
+            <a href="#" style="color: var(--terracotta); text-decoration: none; font-weight: 600;" data-aos="fade-left">Lihat Semua Artikel &rarr;</a>
+        </div>
+        <div class="grid">
+            <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="blog-img"><i data-lucide="image" size="48"></i></div>
+                <div class="blog-content">
+                    <small style="color: var(--terracotta);">Pola Hidup</small>
+                    <h4 style="margin: 10px 0;">Pentingnya Tidur 8 Jam bagi Imunitas</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Bagaimana kualitas tidur mempengaruhi sel darah putih kita...</p>
+                </div>
+            </div>
+            <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="blog-img"><i data-lucide="image" size="48"></i></div>
+                <div class="blog-content">
+                    <small style="color: var(--terracotta);">Nutrisi</small>
+                    <h4 style="margin: 10px 0;">Mitos dan Fakta Mengenai Gula</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Kenali jenis gula yang berbahaya bagi metabolisme Anda...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak">
+        <div class="contact-container" data-aos="fade-up">
+            <div class="contact-info">
+                <h2 style="font-size: 2.2rem; color: var(--sage);">Hubungi Kami</h2>
+                <p>Punya pertanyaan atau ingin reservasi cepat? Kami siap membantu.</p>
+                <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; gap: 10px;"><i data-lucide="mail" color="var(--terracotta)"></i> dr.nama@email.com</div>
+                    <div style="display: flex; gap: 10px;"><i data-lucide="phone" color="var(--terracotta)"></i> +62 812 3456 7890</div>
+                    <div style="display: flex; gap: 10px;"><i data-lucide="map-pin" color="var(--terracotta)"></i> Jakarta, Indonesia</div>
+                </div>
+            </div>
+            <form>
+                <input type="text" placeholder="Nama Lengkap" required>
+                <input type="email" placeholder="Alamat Email" required>
+                <select style="padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
+                    <option>Pilih Layanan</option>
+                    <option>Konsultasi Umum</option>
+                    <option>Medical Checkup</option>
+                    <option>Lainnya</option>
+                </select>
+                <textarea rows="4" placeholder="Pesan atau Keluhan Singkat"></textarea>
+                <button type="submit" class="btn-primary">Kirim Pesan</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 50px 8%; background: var(--text-main); color: var(--cream); text-align: center;">
+        <div style="font-family: 'Playfair Display'; font-size: 1.5rem; margin-bottom: 20px;">dr. [Nama Anda]</div>
+        <p style="opacity: 0.7; font-size: 0.9rem;">Melayani dengan keahlian, merawat dengan kasih sayang.</p>
+        <div style="margin: 20px 0; display: flex; justify-content: center; gap: 20px;">
+            <i data-lucide="instagram"></i>
+            <i data-lucide="linkedin"></i>
+            <i data-lucide="facebook"></i>
+        </div>
+        <p style="font-size: 0.8rem; opacity: 0.5;">&copy; 2024 dr. [Nama Anda]. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        AOS.init({ duration: 1000, once: true });
+
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+    </script>
+</body>
+</html>
